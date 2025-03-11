@@ -2,7 +2,7 @@ import express, { json } from "express";
 const app = express();
 const port = 3000;
 
-app.use(express.json()); // JSON veri kullanımı için middleware
+app.use(express.json());
 
 // Basit bir test endpointi
 app.get("/", (req, res) => {
