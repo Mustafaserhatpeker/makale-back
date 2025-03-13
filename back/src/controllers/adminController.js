@@ -12,8 +12,8 @@ export const loginAdmin = async (req, res) => {
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    const user = await addUser(name, email, password);
+    const { name, email, password, role } = req.body;
+    const user = await addUser(name, email, password, role);
     res.json({ message: "User Added", user });
   } catch (error) {
     res.status(400).json({ error: error.message });

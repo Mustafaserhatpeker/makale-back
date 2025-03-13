@@ -23,13 +23,13 @@ export const adminLogin = async (username, password) => {
   return { admin, token };
 };
 
-export const addUser = async (name, email, password) => {
+export const addUser = async (name, email, password, role) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new Error("Email already exists.");
   }
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({ name, email, password: hashedPassword });
+  const user = new User({ name, email, password: hashedPassword, role });
   await user.save();
   return user;
 };
