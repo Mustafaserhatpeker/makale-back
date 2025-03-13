@@ -14,8 +14,8 @@ const authMiddleware = (req, res, next) => {
       token.replace("Bearer ", ""),
       process.env.JWT_SECRET
     );
-    req.user = decoded; // Kullanıcıyı request objesine ekliyoruz
-    next(); // Middleware işlemi başarılı olduysa bir sonraki adımı çalıştır
+    req.user = decoded;
+    next();
   } catch (error) {
     res.status(400).json({ message: "Invalid token." });
   }
