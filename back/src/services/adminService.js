@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import Admin from "../models/Admin.js";
+import bcrypt from "bcrypt";
+import User from "../models/User.js";
 
 export const adminLogin = async (username, password) => {
   const admin = await Admin.findOne({ username });
@@ -19,4 +21,15 @@ export const adminLogin = async (username, password) => {
   );
 
   return { admin, token };
+};
+
+export const addUser = async (name, email, password) => {
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw new Error("Email already exists.");
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = new User({ name, email, password: hashedPassword });
+  await user.save();
+  return user;
 };
