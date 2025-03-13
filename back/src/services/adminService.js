@@ -3,7 +3,7 @@ import Admin from "../models/Admin.js";
 
 export const adminLogin = async (username, password) => {
   const admin = await Admin.findOne({ username });
-  console.log(admin);
+
   if (!admin) throw new Error("Kullanıcı bulunamadı.");
 
   if (password !== admin.password) {
