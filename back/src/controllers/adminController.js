@@ -1,8 +1,10 @@
-import { addUser } from "../services/authService.js";
+import { adminLogin } from "../services/adminService.js";
 
-export const add = async (req, res) => {
+export const loginAdmin = async (req, res) => {
   try {
-    const { username, password, addedUserMail, addedUserPassword } = req.body;
+    const { username, password } = req.body;
+    const { admin, token } = await adminLogin(username, password);
+    res.json({ message: "Login successful", admin, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
