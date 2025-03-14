@@ -29,7 +29,7 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // Maksimum 5MB dosya boyutu
   fileFilter: function (req, file, cb) {
     // Sadece resim dosyalarına izin ver
-    const fileTypes = /jpeg|jpg|png/;
+    const fileTypes = /jpeg|jpg|png|txt|pdf/;
     const extname = fileTypes.test(
       path.extname(file.originalname).toLowerCase()
     );
