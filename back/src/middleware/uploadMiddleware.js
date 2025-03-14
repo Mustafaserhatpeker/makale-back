@@ -28,12 +28,18 @@ const upload = multer({
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // Maksimum 5MB dosya boyutu
   fileFilter: function (req, file, cb) {
-    // Sadece resim dosyalarına izin ver
     const fileTypes = /jpeg|jpg|png|txt|pdf/;
+    const mimeTypes = [
+      "image/jpeg",
+      "image/png",
+      "text/plain",
+      "application/pdf",
+    ];
+
     const extname = fileTypes.test(
       path.extname(file.originalname).toLowerCase()
     );
-    const mimetype = fileTypes.test(file.mimetype);
+    const mimetype = mimeTypes.includes(file.mimetype);
 
     if (extname && mimetype) {
       return cb(null, true);
