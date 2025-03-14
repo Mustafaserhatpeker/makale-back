@@ -6,8 +6,7 @@ export const uploadFile = async (req, res) => {
       return res.status(400).json({ error: "Dosya yüklenmedi." });
     }
 
-    const { uploadedFor } = req.body;
-    const uploadedBy = req.user._id; // authMiddleware sayesinde oturum açan kullanıcı
+    const { uploadedFor, uploadedBy } = req.body;
 
     const file = await saveFile(req.file.path, uploadedBy, uploadedFor);
     res.json({ message: "Dosya başarıyla yüklendi.", file });

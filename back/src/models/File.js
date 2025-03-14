@@ -4,14 +4,11 @@ const fileSchema = new mongoose.Schema(
   {
     filePath: { type: String, required: true },
     uploadedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true,
     },
     uploadedFor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+      type: String,
     },
   },
   { timestamps: true }
