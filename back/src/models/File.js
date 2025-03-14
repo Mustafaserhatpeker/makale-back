@@ -7,7 +7,7 @@ const fileSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    uploadedFor: {
+    jury: {
       type: String,
     },
   },
