@@ -1,7 +1,6 @@
 import WebSocket, { WebSocketServer } from "ws";
 import { spawn } from "child_process";
-import File from "./models/File.js"; // Dosya modeli
-
+import File from "../models/File.js";
 const wss = new WebSocketServer({ port: 5002 });
 
 wss.on("connection", (ws) => {
