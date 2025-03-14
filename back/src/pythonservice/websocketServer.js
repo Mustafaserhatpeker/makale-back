@@ -20,14 +20,17 @@ wss.on("connection", (ws) => {
 
     const filePath = userFile.filePath;
     const pythonScriptPath =
-      "/Users/mustafaserhatpeker/Desktop/text_pr/test.py";
+      "/Users/mustafaserhatpeker/Desktop/text_pr/main.py";
 
     ws.send(
       JSON.stringify({ status: "processing", message: "İşlem başlatılıyor..." })
     );
 
     // Python scriptini çalıştır
-    const pythonProcess = spawn("python3", [pythonScriptPath, filePath]);
+    const pythonProcess = spawn(
+      "/Users/mustafaserhatpeker/Desktop/text_pr/myenv/bin/python",
+      [pythonScriptPath, filePath]
+    );
 
     pythonProcess.stdout.on("data", (data) => {
       ws.send(JSON.stringify({ status: "progress", message: data.toString() }));
