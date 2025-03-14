@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import roleRoutes from "./routes/roleRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
@@ -17,7 +16,6 @@ app.use(cors());
 
 connectDB();
 
-app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/role", roleRoutes);
 app.use("/api/admin", adminRoutes);
