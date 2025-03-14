@@ -6,7 +6,7 @@ const authMiddleware = (req, res, next) => {
   if (!token) {
     return res
       .status(401)
-      .json({ message: "Access Denied. No token provided." });
+      .json({ message: "Erişim reddedildi, giriş anahtarınız yok." });
   }
 
   try {
@@ -17,7 +17,7 @@ const authMiddleware = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(400).json({ message: "Invalid token." });
+    res.status(400).json({ message: "Geçersiz erişim anahtarı." });
   }
 };
 
@@ -26,7 +26,7 @@ const adminMiddleware = (req, res, next) => {
   if (!token) {
     return res
       .status(401)
-      .json({ message: "Access Denied. No token provided." });
+      .json({ message: "Erişim reddedildi, giriş anahtarınız yok." });
   }
   try {
     const decoded = jwt.verify(
@@ -34,10 +34,14 @@ const adminMiddleware = (req, res, next) => {
       process.env.JWT_SECRET
     );
     if (decoded.userRole !== "admin") {
-      return res.status(403).json({ message: "Access Denied. Admin only." });
+      return res
+        .status(403)
+        .json({ message: "Erişim Reddedildi,yetkisiz erişim." });
     }
   } catch (error) {
-    return res.status(400).json({ message: "Invalid token." });
+    return res
+      .status(400)
+      .json({ message: "Erişim Reddedildi,geçersiz erişim anahtarı." });
   }
   next();
 };
