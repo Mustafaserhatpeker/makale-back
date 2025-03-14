@@ -5,7 +5,7 @@ import User from "../models/User.js";
 export const addUser = async (name, email, password) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new Error("Email already exists.");
+    throw new Error("Kullanıcı Zaten Bulunuyor.");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -17,10 +17,10 @@ export const addUser = async (name, email, password) => {
 
 export const loginUser = async (email, password) => {
   const user = await User.findOne({ email });
-  if (!user) throw new Error("Invalid credentials.");
+  if (!user) throw new Error("Kullanıcı Bulunamadı.");
 
   const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw new Error("Invalid credentials.");
+  if (!isMatch) throw new Error("Kullanıcı Adı veya Şifre Hatalı.");
 
   const token = jwt.sign(
     { userId: user._id, userRole: user.role },

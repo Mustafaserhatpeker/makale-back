@@ -26,7 +26,7 @@ export const adminLogin = async (username, password) => {
 export const addUser = async (name, email, password, role) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new Error("Email already exists.");
+    throw new Error("Kullanıcı Zaten Bulunuyor.");
   }
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = new User({ name, email, password: hashedPassword, role });
