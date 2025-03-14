@@ -10,6 +10,7 @@ const fileSchema = new mongoose.Schema(
     jury: {
       type: String,
     },
+    fileStatus: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
