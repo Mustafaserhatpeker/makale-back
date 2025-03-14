@@ -19,9 +19,9 @@ wss.on("connection", (ws) => {
       return;
     }
 
-    const filePath = userFile.filePath; // Örneğin: uploads/myfile.txt
+    const filePath = userFile.filePath;
     const pythonScriptPath =
-      "/Users/mustafaserhatpeker/Desktop/text_pr/main.py";
+      "/Users/mustafaserhatpeker/Desktop/text_pr/test.py";
 
     ws.send(
       JSON.stringify({ status: "processing", message: "İşlem başlatılıyor..." })
