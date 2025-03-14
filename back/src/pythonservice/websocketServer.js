@@ -9,7 +9,6 @@ wss.on("connection", (ws) => {
   ws.on("message", async (message) => {
     const { userId } = JSON.parse(message);
 
-    // MongoDB'den dosya yolunu bul
     const userFile = await File.findOne({ uploadedBy: userId });
 
     if (!userFile) {
