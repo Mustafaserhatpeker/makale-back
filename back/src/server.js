@@ -5,7 +5,6 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import roleRoutes from "./routes/roleRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-//import uploadRoutes from "./routes/uploadRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
 
 dotenv.config();
