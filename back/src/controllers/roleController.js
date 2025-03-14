@@ -4,5 +4,5 @@ const roles = {
 };
 
 export const getRoles = (req, res) => {
-  res.json({ message: "Rol Bilgileri:", roles: roles });
+  res.json({ message: "Rol bilgileri getirildi.", roles: roles });
 };
