@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import roleRoutes from "./routes/roleRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -19,7 +20,9 @@ connectDB();
 app.use("/api/user", userRoutes);
 app.use("/api/role", roleRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api", uploadRoutes);
 
+app.use("/uploads", express.static("uploads"));
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
