@@ -1,6 +1,6 @@
 const roles = {
   admin: "admin",
-  user: "user",
+  user: "jury",
 };
 
 export const getRoles = (req, res) => {
