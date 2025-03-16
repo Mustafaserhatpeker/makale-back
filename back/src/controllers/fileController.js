@@ -92,6 +92,7 @@ export const getAllFiles = async (req, res) => {
 export const getFileContentController = async (req, res) => {
   try {
     const { filePath } = req.body;
+    console.log("filePath", req.body);
     const content = await getFileContent(filePath);
     res.send(content);
   } catch (error) {
