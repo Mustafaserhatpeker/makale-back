@@ -1,4 +1,4 @@
-import { saveFile, getFileById } from "../services/fileService.js";
+import { saveFile, getFileById, getFiles } from "../services/fileService.js";
 
 export const uploadFile = async (req, res) => {
   try {
@@ -45,6 +45,14 @@ export const getFile = async (req, res) => {
     }
 
     res.json({ file: fileObject });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+export const getAllFiles = async (req, res) => {
+  try {
+    const files = await getFiles();
+    res.json({ files });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

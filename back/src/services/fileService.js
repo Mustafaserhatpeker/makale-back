@@ -9,3 +9,7 @@ export const saveFile = async (filePath, uploadedBy) => {
 export const getFileById = async (id) => {
   return await File.findById(id);
 };
+
+export const getFiles = async () => {
+  return await File.find();
+};
