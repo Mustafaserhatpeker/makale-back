@@ -4,6 +4,7 @@ import {
   getFile,
   getAllFiles,
   getFileContentController,
+  updateFileStatusController,
 } from "../controllers/fileController.js";
 import upload from "../middleware/uploadMiddleware.js";
 
@@ -13,4 +14,5 @@ router.post("/upload", upload.single("file"), uploadFile);
 router.post("/getfile", getFile);
 router.get("/get-all-files", getAllFiles);
 router.post("/get-file-content", getFileContentController);
+router.post("/update-file-status", updateFileStatusController);
 export default router;

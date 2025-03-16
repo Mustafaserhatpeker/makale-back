@@ -44,3 +44,12 @@ export const getFileContent = async (filePath) => {
     throw new Error("Dosya okunamadı");
   }
 };
+
+export const updateFileStatus = async (fileId, status) => {
+  try {
+    await File.updateOne({ _id: fileId }, { fileStatus: status });
+  } catch (error) {
+    console.error("Error updating file status:", error);
+    throw new Error("Dosya durumu güncellenemedi.");
+  }
+};

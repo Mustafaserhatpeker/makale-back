@@ -3,6 +3,7 @@ import {
   getFileById,
   getFiles,
   getFileContent,
+  updateFileStatus,
 } from "../services/fileService.js";
 
 export const uploadFile = async (req, res) => {
@@ -95,6 +96,16 @@ export const getFileContentController = async (req, res) => {
     console.log("filePath", req.body);
     const content = await getFileContent(filePath);
     res.send(content);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const updateFileStatusController = async (req, res) => {
+  try {
+    const { fileId, status } = req.body;
+    await updateFileStatus(fileId, status);
+    res.json({ message: "Dosya durumu güncellendi." });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
