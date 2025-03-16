@@ -52,7 +52,33 @@ export const getFile = async (req, res) => {
 export const getAllFiles = async (req, res) => {
   try {
     const files = await getFiles();
-    res.json({ files });
+
+    // Tüm dosyaların nesnesine statusText ekleyelim
+    const filesWithStatus = files.map((file) => {
+      let fileObject = file.toObject();
+
+      switch (fileObject.fileStatus) {
+        case 0:
+          fileObject.statusText = "Dosya Editöre Gönderildi.";
+          break;
+        case 1:
+          fileObject.statusText = "Dosya Hakem Ataması Bekliyor.";
+          break;
+        case 2:
+          fileObject.statusText = "Dosya Hakem İncelemesinde.";
+          break;
+        case 3:
+          fileObject.statusText = "Hakem İncelemesi Bitti.";
+          break;
+        default:
+          fileObject.statusText = "Bilinmeyen bir hata oluştu.";
+          break;
+      }
+
+      return fileObject;
+    });
+
+    res.json({ files: filesWithStatus });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
