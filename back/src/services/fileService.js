@@ -1,5 +1,6 @@
 import File from "../models/File.js";
 import mongoose from "mongoose";
+import fs from "fs/promises";
 export const saveFile = async (filePath, uploadedBy) => {
   const file = new File({ filePath, uploadedBy });
   await file.save();
@@ -32,4 +33,14 @@ export const getFileById = async (id) => {
 
 export const getFiles = async () => {
   return await File.find();
+};
+
+export const getFileContent = async (filePath) => {
+  try {
+    const data = await fs.readFile(filePath, "utf8");
+    return data;
+  } catch (error) {
+    console.error("Error reading file:", error);
+    throw new Error("Dosya okunamadı");
+  }
 };
