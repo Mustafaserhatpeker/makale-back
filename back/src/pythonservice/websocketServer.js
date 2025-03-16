@@ -1,4 +1,5 @@
 import WebSocket, { WebSocketServer } from "ws";
+import mongoose from "mongoose";
 import { spawn } from "child_process";
 import File from "../models/File.js";
 const wss = new WebSocketServer({ port: 5002 });
@@ -7,9 +8,13 @@ wss.on("connection", (ws) => {
   console.log("Yeni bir istemci bağlandı.");
 
   ws.on("message", async (message) => {
-    const { userId } = JSON.parse(message);
+    const { fileId } = JSON.parse(message);
 
-    const userFile = await File.findOne({ uploadedBy: userId });
+    if (!mongoose.Types.ObjectId.isValid(fileId)) {
+      console.log("Invalid ObjectId.");
+      return null;
+    }
+    const userFile = await File.findById(fileId);
 
     if (!userFile) {
       ws.send(
