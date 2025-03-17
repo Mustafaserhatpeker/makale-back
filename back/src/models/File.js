@@ -11,7 +11,7 @@ const fileSchema = new mongoose.Schema(
       type: String,
     },
     fileStatus: { type: Number, default: 0 },
-    fileStatus: { type: Boolean, default: false },
+    isConverted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

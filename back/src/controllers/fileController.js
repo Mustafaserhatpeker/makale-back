@@ -3,6 +3,7 @@ import {
   getFileById,
   getFiles,
   getFileContent,
+  updateConvertStatus,
   updateFileStatus,
 } from "../services/fileService.js";
 
@@ -31,6 +32,18 @@ export const getFile = async (req, res) => {
     }
 
     let fileObject = file.toObject(); // Mongoose nesnesini düz nesneye çevir
+    if (fileObject.isConverted === true) {
+      const lastSlashIndex = fileObject.filePath.lastIndexOf("/");
+      if (lastSlashIndex !== -1) {
+        fileObject.convertedFilePath =
+          fileObject.filePath.slice(0, lastSlashIndex + 1) +
+          "tamamlandi-" +
+          fileObject.filePath.slice(lastSlashIndex + 1);
+      } else {
+        // Eğer filePath içerisinde '/' işareti yoksa, başına ekle
+        fileObject.convertedFilePath = "tamamlandi-" + fileObject.filePath;
+      }
+    }
 
     switch (fileObject.fileStatus) {
       case 0:
@@ -58,10 +71,20 @@ export const getFile = async (req, res) => {
 export const getAllFiles = async (req, res) => {
   try {
     const files = await getFiles();
-
-    // Tüm dosyaların nesnesine statusText ekleyelim
     const filesWithStatus = files.map((file) => {
       let fileObject = file.toObject();
+      if (fileObject.isConverted === true) {
+        const lastSlashIndex = fileObject.filePath.lastIndexOf("/");
+        if (lastSlashIndex !== -1) {
+          fileObject.convertedFilePath =
+            fileObject.filePath.slice(0, lastSlashIndex + 1) +
+            "tamamlandi-" +
+            fileObject.filePath.slice(lastSlashIndex + 1);
+        } else {
+          // Eğer filePath içerisinde '/' işareti yoksa, başına ekle
+          fileObject.convertedFilePath = "tamamlandi-" + fileObject.filePath;
+        }
+      }
 
       switch (fileObject.fileStatus) {
         case 0:
@@ -96,6 +119,16 @@ export const getFileContentController = async (req, res) => {
     console.log("filePath", req.body);
     const content = await getFileContent(filePath);
     res.send(content);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const updateConvertStatusController = async (req, res) => {
+  try {
+    const { fileId, status } = req.body;
+    await updateConvertStatus(fileId, status);
+    res.json({ message: "Dönüşüm durumu güncellendi." });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

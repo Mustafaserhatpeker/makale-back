@@ -45,6 +45,15 @@ export const getFileContent = async (filePath) => {
   }
 };
 
+export const updateConvertStatus = async (fileId, status) => {
+  try {
+    await File.updateOne({ _id: fileId }, { isConverted: status });
+  } catch (error) {
+    console.error("Error updating file converting:", error);
+    throw new Error("Dosya durumu güncellenemedi.");
+  }
+};
+
 export const updateFileStatus = async (fileId, status) => {
   try {
     await File.updateOne({ _id: fileId }, { fileStatus: status });
