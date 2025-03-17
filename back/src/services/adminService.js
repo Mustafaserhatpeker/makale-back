@@ -33,3 +33,18 @@ export const addUser = async (name, email, password, role) => {
   await user.save();
   return user;
 };
+
+export const getUsers = async () => {
+  const users = await User.find();
+  return users;
+};
+
+export const addFileToUser = async (userId, filePath) => {
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error("Kullanıcı bulunamadı.");
+  }
+  user.addedFiles.push(filePath);
+  await user.save();
+  return user;
+};
