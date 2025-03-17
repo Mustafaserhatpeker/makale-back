@@ -5,7 +5,6 @@ import {
   listUsers,
   addFileToUserController,
 } from "../controllers/adminController.js";
-import { adminMiddleware } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.post("/login", loginAdmin);
