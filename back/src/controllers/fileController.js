@@ -136,7 +136,11 @@ export const updateConvertStatusController = async (req, res) => {
 
 export const updateFileStatusController = async (req, res) => {
   try {
+    console.log("req.body", req.body);
     const { fileId, status } = req.body;
+    if (!fileId || !status) {
+      return res.status(400).json({ error: "Eksik parametre." });
+    }
     await updateFileStatus(fileId, status);
     res.json({ message: "Dosya durumu güncellendi." });
   } catch (error) {

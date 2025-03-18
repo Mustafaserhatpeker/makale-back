@@ -36,6 +36,9 @@ export const listUsers = async (req, res) => {
 export const addFileToUserController = async (req, res) => {
   try {
     const { userId, filePath } = req.body;
+    if (!userId || !filePath) {
+      return res.status(400).json({ error: "Eksik parametre." });
+    }
     const user = await addFileToUser(userId, filePath);
     res.json({ message: "Dosya başarıyla eklendi.", user });
   } catch (error) {
