@@ -1,6 +1,6 @@
 import { addMessage } from "../services/messageService.js";
 
-export const registerUser = async (req, res) => {
+export const addMessageController = async (req, res) => {
   try {
     const { sender, receiver, message } = req.body;
     const mess = await addMessage(sender, receiver, message);
