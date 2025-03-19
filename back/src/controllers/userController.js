@@ -5,7 +5,9 @@ export const getProfile = (req, res) => {
 
 export const login = async (req, res) => {
   try {
+    console.log(req.body);
     const { email, password } = req.body;
+
     const { user, token } = await loginUser(email, password);
     res.json({ message: "Giriş Başarılı.", user, token });
   } catch (error) {

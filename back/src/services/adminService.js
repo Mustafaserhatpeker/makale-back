@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import Admin from "../models/Admin.js";
-import bcrypt from "bcrypt";
+
 import User from "../models/User.js";
 
 export const adminLogin = async (username, password) => {
@@ -28,8 +28,8 @@ export const addUser = async (name, email, password, role) => {
   if (existingUser) {
     throw new Error("Kullanıcı Zaten Bulunuyor.");
   }
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({ name, email, password: hashedPassword, role });
+
+  const user = new User({ name, email, password: password, role });
   await user.save();
   return user;
 };
