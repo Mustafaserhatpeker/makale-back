@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import roleRoutes from "./routes/roleRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
 import "./pythonservice/websocketServer.js";
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/role", roleRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api", fileRoutes);
+app.use("/api/message", messageRoutes);
 
 app.use("/uploads", express.static("uploads"));
 
