@@ -5,13 +5,13 @@ import {
 
 export const addMessage = async (req, res) => {
   try {
-    const { fileId, userId, message } = req.body;
+    const { fileId, sender, message } = req.body;
 
-    if (!fileId || !userId || !message) {
+    if (!fileId || !sender || !message) {
       return res.status(400).json({ error: "Eksik parametreler." });
     }
 
-    const newMessage = await saveMessage(fileId, userId, message);
+    const newMessage = await saveMessage(fileId, sender, message);
     res
       .status(201)
       .json({ message: "Mesaj başarıyla kaydedildi.", newMessage });
