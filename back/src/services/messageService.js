@@ -11,5 +11,15 @@ export const getMessagesByFileId = async (fileId) => {
 };
 
 export const getAllMessages = async () => {
-  return await Message.find();
+  const messages = await Message.find().sort({ createdAt: -1 });
+
+  const latestMessages = {};
+
+  messages.forEach(msg => {
+    if (!latestMessages[msg.sender]) {
+      latestMessages[msg.sender] = msg;
+    }
+  });
+
+  return Object.values(latestMessages);
 }
