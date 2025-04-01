@@ -58,6 +58,9 @@ export const getFile = async (req, res) => {
       case 3:
         fileObject.statusText = "Hakem İncelemesi Bitti.";
         break;
+      case 4:
+        fileObject.statusText = "Dosya Hakem Tarafından Reddedildi. Revizyon İsteniyor.";
+        break;
       default:
         fileObject.statusText = "Bilinmeyen bir hata oluştu.";
         break;
@@ -98,6 +101,9 @@ export const getAllFiles = async (req, res) => {
           break;
         case 3:
           fileObject.statusText = "Hakem İncelemesi Bitti.";
+          break;
+        case 4:
+          fileObject.statusText = "Dosya Hakem Tarafından Reddedildi. Revizyon İsteniyor.";
           break;
         default:
           fileObject.statusText = "Bilinmeyen bir hata oluştu.";
