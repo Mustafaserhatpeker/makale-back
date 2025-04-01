@@ -1,6 +1,7 @@
 import {
   saveMessage,
   getMessagesByFileId,
+  getAllMessages,
 } from "../services/messageService.js";
 
 export const addMessage = async (req, res) => {
@@ -20,7 +21,7 @@ export const addMessage = async (req, res) => {
   }
 };
 
-export const getMessages = async (req, res) => {
+export const getMessagesByFileIdController = async (req, res) => {
   try {
     const { fileId } = req.body;
     if (!fileId) {
@@ -33,3 +34,12 @@ export const getMessages = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getAllMessagesController = async (req, res) => {
+  try {
+    const messages = await getAllMessages();
+    res.json({ messages });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

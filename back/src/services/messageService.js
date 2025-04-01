@@ -9,3 +9,7 @@ export const saveMessage = async (fileId, sender, message) => {
 export const getMessagesByFileId = async (fileId) => {
   return await Message.find({ fileId });
 };
+
+export const getAllMessages = async () => {
+  return await Message.find();
+}
