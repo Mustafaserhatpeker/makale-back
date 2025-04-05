@@ -2,6 +2,12 @@ import Message from "../models/Message.js";
 import Log from "../models/Log.js";
 export const saveMessage = async (fileId, sender, message) => {
   const newMessage = new Message({ fileId, sender, message });
+  const log = new Log({
+    logContent: `Mesaj gönderildi: Mesaj: ${message}, Gönderen: ${sender}`,
+    logType: "info",
+    logState: "Mesaj İşlemleri",
+  });
+  await log.save();
   await newMessage.save();
   return newMessage;
 };
