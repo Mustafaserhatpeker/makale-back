@@ -7,7 +7,7 @@ export const saveFile = async (filePath, uploadedBy) => {
   return file;
 };
 
-export const getFileById = async (id) => {
+export const getFileById = async (id, uploadedBy) => {
   try {
     id = id.trim();
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -22,6 +22,14 @@ export const getFileById = async (id) => {
       console.log("Dosya Bulunamadı.");
       return null;
     }
+    console.log("file", file);
+    console.log("file.uploadedBy", file.uploadedBy);
+
+    if (file.uploadedBy !== uploadedBy) {
+      console.log("Dosya sahibi ile eşleşmiyor.");
+      return null;
+    }
+    console.log("Dosya sahibi ile eşleşiyor.");
 
     console.log("file", file);
     return file;

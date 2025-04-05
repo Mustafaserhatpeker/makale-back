@@ -24,8 +24,8 @@ export const uploadFile = async (req, res) => {
 
 export const getFile = async (req, res) => {
   try {
-    const { id } = req.body;
-    const file = await getFileById(id);
+    const { id, uploadedBy } = req.body;
+    const file = await getFileById(id, uploadedBy);
 
     if (!file) {
       return res.status(404).json({ error: "Dosya bulunamadı." });
