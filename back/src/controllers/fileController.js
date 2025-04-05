@@ -22,22 +22,21 @@ export const uploadFile = async (req, res) => {
     }
 
     const { uploadedBy } = req.body;
-
+    if (!uploadedBy) {
+      const log = new Log({
+        logContent: "Dosya yüklenirken hata oluştu: Eksik parametre.",
+        logType: "error",
+        logState: "Dosya İşlemi",
+      });
+      await log.save();
+      return res.status(400).json({ error: "Eksik parametre." });
+    }
     const file = await saveFile(req.file.path, uploadedBy);
-    const log = new Log({
-      logContent: `Dosya yüklendi: ${req.file.path}`,
-      logType: "success",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
+
+
     res.json({ message: "Dosya başarıyla yüklendi.", file });
   } catch (error) {
-    const log = new Log({
-      logContent: `Dosya yüklenirken hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
+
     res.status(500).json({ error: error.message });
   }
 };
@@ -93,12 +92,7 @@ export const getFile = async (req, res) => {
 
     res.json({ file: fileObject });
   } catch (error) {
-    const log = new Log({
-      logContent: `Dosya alınırken hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
+
     res.status(500).json({ error: error.message });
   }
 };
@@ -145,12 +139,7 @@ export const getAllFiles = async (req, res) => {
 
     res.json({ files: filesWithStatus });
   } catch (error) {
-    const log = new Log({
-      logContent: `Tüm dosyalar alınırken hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
+
     res.status(500).json({ error: error.message });
   }
 };
@@ -158,16 +147,20 @@ export const getAllFiles = async (req, res) => {
 export const getFileContentController = async (req, res) => {
   try {
     const { filePath } = req.body;
-    console.log("filePath", req.body);
+    if (!filePath) {
+      const log = new Log({
+        logContent: "Dosya içeriği alınırken hata oluştu: Eksik parametre.",
+        logType: "error",
+        logState: "Dosya İşlemi",
+      });
+      await log.save();
+      return res.status(400).json({ error: "Eksik parametre." });
+    }
+
     const content = await getFileContent(filePath);
     res.send(content);
   } catch (error) {
-    const log = new Log({
-      logContent: `Dosya içeriği alınırken hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
+
     res.status(500).json({ error: error.message });
   }
 };
@@ -175,21 +168,19 @@ export const getFileContentController = async (req, res) => {
 export const updateConvertStatusController = async (req, res) => {
   try {
     const { fileId, status } = req.body;
+    if (!fileId || !status) {
+      const log = new Log({
+        logContent: `Dönüşüm durumu güncellenirken eksik parametre: ${fileId}, ${status}`,
+        logType: "error",
+        logState: "Dosya İşlemi",
+      });
+      await log.save();
+      return res.status(400).json({ error: "Eksik parametre." });
+    }
+
     await updateConvertStatus(fileId, status);
-    const log = new Log({
-      logContent: `Dönüşüm durumu güncellendi: ${fileId}, ${status}`,
-      logType: "success",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
     res.json({ message: "Dönüşüm durumu güncellendi." });
   } catch (error) {
-    const log = new Log({
-      logContent: `Dönüşüm durumu güncellenirken hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
     res.status(500).json({ error: error.message });
   }
 };
@@ -208,20 +199,8 @@ export const updateFileStatusController = async (req, res) => {
       return res.status(400).json({ error: "Eksik parametre." });
     }
     await updateFileStatus(fileId, status);
-    const log = new Log({
-      logContent: `Dosya durumu güncellendi: ${fileId}, ${status}`,
-      logType: "success",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
     res.json({ message: "Dosya durumu güncellendi." });
   } catch (error) {
-    const log = new Log({
-      logContent: `Dosya durumu güncellenirken hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
     res.status(500).json({ error: error.message });
   }
 };

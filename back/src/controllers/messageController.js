@@ -19,23 +19,13 @@ export const addMessage = async (req, res) => {
     }
 
     const newMessage = await saveMessage(fileId, sender, message);
-    const log = new Log({
-      logContent: `Mesaj Gönderildi: ${message}`,
-      logType: "success",
-      logState: "Mesaj İşlemleri",
-    });
-    await log.save();
+
     res
       .status(201)
       .json({ message: "Mesaj başarıyla kaydedildi.", newMessage });
 
   } catch (error) {
-    const log = new Log({
-      logContent: `Mesaj gönderimi sırasında hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Mesaj İşlemleri",
-    });
-    await log.save();
+
     res.status(500).json({ error: error.message });
   }
 };
@@ -55,11 +45,7 @@ export const getMessagesByFileIdController = async (req, res) => {
     const messages = await getMessagesByFileId(fileId);
     res.json({ messages });
   } catch (error) {
-    const log = new Log({
-      logContent: "Mesaj İçeriği Geririlirken Bir hata oluştu.",
-      logType: "error",
-      logState: "Mesaj İşlemleri",
-    })
+
     res.status(500).json({ error: error.message });
   }
 };
@@ -67,12 +53,6 @@ export const getMessagesByFileIdController = async (req, res) => {
 export const getAllMessagesController = async (req, res) => {
   try {
     const messages = await getAllMessages();
-    const log = new Log({
-      logContent: "Tüm mesajlar başarıyla getirildi.",
-      logType: "success",
-      logState: "Mesaj İşlemleri",
-    });
-    await log.save();
     if (!messages || messages.length === 0) {
       const log = new Log({
         logContent: "Mesaj bulunamadı.",
@@ -84,12 +64,7 @@ export const getAllMessagesController = async (req, res) => {
     }
     res.json({ messages });
   } catch (error) {
-    const log = new Log({
-      logContent: `Mesajlar getirilirken hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Mesaj İşlemleri",
-    });
-    await log.save();
+
     res.status(500).json({ error: error.message });
   }
 }

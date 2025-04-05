@@ -28,21 +28,10 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ error: "Eksik parametre." });
     }
     const user = await addUser(name, email, role);
-    const log = new Log({
-      logContent: `Yeni kullanıcı eklendi: ${name}`,
-      logType: "info",
-      logState: "Kullanıcı İşlemi",
-    });
-    await log.save();
+
     res.json({ message: "Kullanıcı Başarıyla Eklendi.", user });
 
   } catch (error) {
-    const log = new Log({
-      logContent: `Kullanıcı eklenirken hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Kullanıcı İşlemi",
-    });
-    await log.save();
     res.status(400).json({ error: error.message });
   }
 };
@@ -57,24 +46,10 @@ export const listUsers = async (req, res) => {
         logState: "Kullanıcı İşlemi",
       });
       await log.save();
-
       return res.status(404).json({ message: "Kullanıcı bulunamadı." });
     }
-
-    const log = new Log({
-      logContent: "Kullanıcı listesi başarıyla getirildi.",
-      logType: "success",
-      logState: "Kullanıcı İşlemi",
-    });
-    await log.save();
     res.json({ users });
   } catch (error) {
-    const log = new Log({
-      logContent: `Kullanıcıları listeleme sırasında hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Kullanıcı İşlemi",
-    });
-    await log.save();
     res.status(400).json({ error: error.message });
   }
 };
@@ -89,24 +64,10 @@ export const addFileToUserController = async (req, res) => {
       });
       await log.save();
       return res.status(400).json({ error: "Eksik parametre." });
-
     }
     const user = await addFileToUser(userId, filePath);
-    const log = new Log({
-      logContent: `Yeni dosya eklendi: ${filePath} Kullanıcı: ${user.name}`,
-      logType: "info",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
     res.json({ message: "Dosya başarıyla eklendi.", user });
   } catch (error) {
-
-    const log = new Log({
-      logContent: `Dosya eklenirken hata oluştu: ${error.message}`,
-      logType: "error",
-      logState: "Dosya İşlemi",
-    });
-    await log.save();
     res.status(400).json({ error: error.message });
   }
 };
