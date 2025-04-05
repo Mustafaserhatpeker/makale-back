@@ -3,6 +3,6 @@ import { getLogsController } from "../controllers/logController.js";
 const router = express.Router();
 
 
-router.post("/", getLogsController);
+router.post("/get-logs", getLogsController);
 
 export default router;
