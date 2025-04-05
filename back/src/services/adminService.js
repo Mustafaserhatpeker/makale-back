@@ -29,7 +29,7 @@ export const addUser = async (name, email, role) => {
   if (existingUser) {
     const log = new Log({
       logContent: `Hakem Ekleme Başarısız, Hakem Zaten Bulunuyor: ${name}`,
-      logType: "conflict",
+      logType: "error",
       logState: "Kullanıcı İşlemi",
     });
     await log.save();
@@ -39,7 +39,7 @@ export const addUser = async (name, email, role) => {
   const user = new User({ name, email, role });
   const log = new Log({
     logContent: `Yeni Hakem Eklendi: ${name}`,
-    logType: "info",
+    logType: "success",
     logState: "Kullanıcı İşlemi",
   });
   await log.save();
@@ -49,6 +49,21 @@ export const addUser = async (name, email, role) => {
 
 export const getUsers = async () => {
   const users = await User.find();
+  if (!users || users.length === 0) {
+    const log = new Log({
+      logContent: "Kullanıcı listesi boş.",
+      logType: "info",
+      logState: "Kullanıcı İşlemi",
+    });
+    await log.save();
+    throw new Error("Kullanıcı bulunamadı.");
+  }
+  const log = new Log({
+    logContent: `Kullanıcı Listesi: ${users.map((user) => user.name).join(", ")}`,
+    logType: "success",
+    logState: "Kullanıcı İşlemi",
+  });
+  await log.save();
   return users;
 };
 
@@ -67,7 +82,7 @@ export const addFileToUser = async (userId, filePath) => {
   user.addedFiles.push(filePath);
   const log = new Log({
     logContent: `Yeni Dosya Eklendi: ${filePath} Kullanıcı: ${user.name}`,
-    logType: "info",
+    logType: "success",
     logState: "Kullanıcı İşlemi",
   });
   await log.save();
