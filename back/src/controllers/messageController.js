@@ -55,6 +55,11 @@ export const getMessagesByFileIdController = async (req, res) => {
     const messages = await getMessagesByFileId(fileId);
     res.json({ messages });
   } catch (error) {
+    const log = new Log({
+      logContent: "Mesaj İçeriği Geririlirken Bir hata oluştu.",
+      logType: "error",
+      logState: "Mesaj İşlemleri",
+    })
     res.status(500).json({ error: error.message });
   }
 };
