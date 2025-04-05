@@ -38,7 +38,7 @@ export const addUser = async (name, email, role) => {
 
   const user = new User({ name, email, role });
   const log = new Log({
-    logContent: `Yeni Hakem Eklendi: ${name}`,
+    logContent: `Yeni Hakem Eklendi: ${name} (${email})`,
     logType: "success",
     logState: "Kullanıcı İşlemleri",
   });

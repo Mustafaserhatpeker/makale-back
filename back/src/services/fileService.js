@@ -5,7 +5,7 @@ import Log from "../models/Log.js";
 export const saveFile = async (filePath, uploadedBy) => {
   const file = new File({ filePath, uploadedBy });
   const log = new Log({
-    logContent: `Dosya başarıyla yüklendi: ${filePath}`,
+    logContent: `Dosya başarıyla yüklendi: ${uploadedBy}`,
     logType: "success",
     logState: "Dosya İşlemleri",
   });
