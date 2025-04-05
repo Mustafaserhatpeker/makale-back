@@ -1,23 +1,20 @@
 import Log from "../models/Log.js";
 
-export const getAllLogs = async () => {
-    const logs = await Log.find().sort({ createdAt: -1 });
-    if (!logs || logs.length === 0) {
-        return null;
+
+export const getLogs = async ({ logType, logState, sortByDate = "desc" } = {}) => {
+    const filter = {};
+
+    if (logType) {
+        filter.logType = logType;
     }
-    return logs;
-}
-export const getLogsByType = async (logType) => {
-    const logs = await Log.find({ logType }).sort({ createdAt: -1 });
-    if (!logs || logs.length === 0) {
-        return null;
+
+    if (logState) {
+        filter.logState = logState;
     }
-    return logs;
-}
-export const getLogsByState = async (logState) => {
-    const logs = await Log.find({ logState }).sort({ createdAt: -1 });
-    if (!logs || logs.length === 0) {
-        return null;
-    }
-    return logs;
+
+    const sortOrder = sortByDate === "asc" ? 1 : -1;
+
+    const logs = await Log.find(filter).sort({ createdAt: sortOrder });
+
+    return logs.length > 0 ? logs : null;
 }
