@@ -6,18 +6,38 @@ import {
   updateConvertStatus,
   updateFileStatus,
 } from "../services/fileService.js";
+import Log from "../models/Log.js";
 
 export const uploadFile = async (req, res) => {
   try {
     if (!req.file) {
+      const log = new Log({
+        logContent: "Dosya yüklenmedi.",
+        logType: "error",
+        logState: "Dosya İşlemi",
+      });
+      await log.save();
       return res.status(400).json({ error: "Dosya yüklenmedi." });
+
     }
 
     const { uploadedBy } = req.body;
 
     const file = await saveFile(req.file.path, uploadedBy);
+    const log = new Log({
+      logContent: `Dosya yüklendi: ${req.file.path}`,
+      logType: "success",
+      logState: "Dosya İşlemi",
+    });
+    await log.save();
     res.json({ message: "Dosya başarıyla yüklendi.", file });
   } catch (error) {
+    const log = new Log({
+      logContent: `Dosya yüklenirken hata oluştu: ${error.message}`,
+      logType: "error",
+      logState: "Dosya İşlemi",
+    });
+    await log.save();
     res.status(500).json({ error: error.message });
   }
 };
@@ -28,10 +48,16 @@ export const getFile = async (req, res) => {
     const file = await getFileById(id, uploadedBy);
 
     if (!file) {
+      const log = new Log({
+        logContent: `Dosya bulunamadı: ${id}`,
+        logType: "error",
+        logState: "Dosya İşlemi",
+      });
+      await log.save();
       return res.status(404).json({ error: "Dosya bulunamadı." });
     }
 
-    let fileObject = file.toObject(); // Mongoose nesnesini düz nesneye çevir
+    let fileObject = file.toObject();
     if (fileObject.isConverted === true) {
       const lastSlashIndex = fileObject.filePath.lastIndexOf("/");
       if (lastSlashIndex !== -1) {
@@ -40,7 +66,6 @@ export const getFile = async (req, res) => {
           "tamamlandi-" +
           fileObject.filePath.slice(lastSlashIndex + 1);
       } else {
-        // Eğer filePath içerisinde '/' işareti yoksa, başına ekle
         fileObject.convertedFilePath = "tamamlandi-" + fileObject.filePath;
       }
     }
@@ -68,6 +93,12 @@ export const getFile = async (req, res) => {
 
     res.json({ file: fileObject });
   } catch (error) {
+    const log = new Log({
+      logContent: `Dosya alınırken hata oluştu: ${error.message}`,
+      logType: "error",
+      logState: "Dosya İşlemi",
+    });
+    await log.save();
     res.status(500).json({ error: error.message });
   }
 };
@@ -84,11 +115,10 @@ export const getAllFiles = async (req, res) => {
             "tamamlandi-" +
             fileObject.filePath.slice(lastSlashIndex + 1);
         } else {
-          // Eğer filePath içerisinde '/' işareti yoksa, başına ekle
+
           fileObject.convertedFilePath = "tamamlandi-" + fileObject.filePath;
         }
       }
-
       switch (fileObject.fileStatus) {
         case 0:
           fileObject.statusText = "Dosya Editöre Gönderildi.";
@@ -115,6 +145,12 @@ export const getAllFiles = async (req, res) => {
 
     res.json({ files: filesWithStatus });
   } catch (error) {
+    const log = new Log({
+      logContent: `Tüm dosyalar alınırken hata oluştu: ${error.message}`,
+      logType: "error",
+      logState: "Dosya İşlemi",
+    });
+    await log.save();
     res.status(500).json({ error: error.message });
   }
 };
@@ -126,6 +162,12 @@ export const getFileContentController = async (req, res) => {
     const content = await getFileContent(filePath);
     res.send(content);
   } catch (error) {
+    const log = new Log({
+      logContent: `Dosya içeriği alınırken hata oluştu: ${error.message}`,
+      logType: "error",
+      logState: "Dosya İşlemi",
+    });
+    await log.save();
     res.status(500).json({ error: error.message });
   }
 };
@@ -134,8 +176,20 @@ export const updateConvertStatusController = async (req, res) => {
   try {
     const { fileId, status } = req.body;
     await updateConvertStatus(fileId, status);
+    const log = new Log({
+      logContent: `Dönüşüm durumu güncellendi: ${fileId}, ${status}`,
+      logType: "success",
+      logState: "Dosya İşlemi",
+    });
+    await log.save();
     res.json({ message: "Dönüşüm durumu güncellendi." });
   } catch (error) {
+    const log = new Log({
+      logContent: `Dönüşüm durumu güncellenirken hata oluştu: ${error.message}`,
+      logType: "error",
+      logState: "Dosya İşlemi",
+    });
+    await log.save();
     res.status(500).json({ error: error.message });
   }
 };
@@ -145,11 +199,29 @@ export const updateFileStatusController = async (req, res) => {
     console.log("req.body", req.body);
     const { fileId, status } = req.body;
     if (!fileId || !status) {
+      const log = new Log({
+        logContent: `Dosya durumu güncellenirken eksik parametre: ${fileId}, ${status}`,
+        logType: "error",
+        logState: "Dosya İşlemi",
+      });
+      await log.save();
       return res.status(400).json({ error: "Eksik parametre." });
     }
     await updateFileStatus(fileId, status);
+    const log = new Log({
+      logContent: `Dosya durumu güncellendi: ${fileId}, ${status}`,
+      logType: "success",
+      logState: "Dosya İşlemi",
+    });
+    await log.save();
     res.json({ message: "Dosya durumu güncellendi." });
   } catch (error) {
+    const log = new Log({
+      logContent: `Dosya durumu güncellenirken hata oluştu: ${error.message}`,
+      logType: "error",
+      logState: "Dosya İşlemi",
+    });
+    await log.save();
     res.status(500).json({ error: error.message });
   }
 };
