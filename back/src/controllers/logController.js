@@ -1,4 +1,4 @@
-import { getAllLogs, getLogsByState, getLogsByType } from "../services/logService";
+import { getAllLogs, getLogsByState, getLogsByType } from "../services/logService.js";
 
 export const getAllLogsController = async (req, res) => {
     try {
