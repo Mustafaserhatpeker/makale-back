@@ -7,7 +7,7 @@ export const saveFile = async (filePath, uploadedBy) => {
   const log = new Log({
     logContent: `Dosya başarıyla yüklendi: ${filePath}`,
     logType: "success",
-    logState: "Dosya İşlemi",
+    logState: "Dosya İşlemleri",
   });
   await log.save();
   await file.save();
@@ -21,7 +21,7 @@ export const getFileById = async (id, uploadedBy) => {
       const log = new Log({
         logContent: "Geçersiz ObjectId.",
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       console.log("Invalid ObjectId.");
@@ -36,7 +36,7 @@ export const getFileById = async (id, uploadedBy) => {
       const log = new Log({
         logContent: "Dosya bulunamadı.",
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       return null;
@@ -49,7 +49,7 @@ export const getFileById = async (id, uploadedBy) => {
       const log = new Log({
         logContent: "Dosya sahibi ile eşleşmiyor.",
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       return null;
@@ -58,7 +58,7 @@ export const getFileById = async (id, uploadedBy) => {
     const log = new Log({
       logContent: `Dosya başarıyla getirildi: ${file.filePath}`,
       logType: "success",
-      logState: "Dosya İşlemi",
+      logState: "Dosya İşlemleri",
     });
     await log.save();
     return file;
@@ -67,7 +67,7 @@ export const getFileById = async (id, uploadedBy) => {
     const log = new Log({
       logContent: "Dosya getirilirken bir hata oluştu.",
       logType: "error",
-      logState: "Dosya İşlemi",
+      logState: "Dosya İşlemleri",
     });
     await log.save();
     return null;
@@ -80,14 +80,14 @@ export const getFiles = async () => {
     const log = new Log({
       logContent: "Dosya listesi boş.",
       logType: "info",
-      logState: "Dosya İşlemi",
+      logState: "Dosya İşlemleri",
     });
     await log.save();
   }
   const log = new Log({
     logContent: `Dosya Listesi: ${files.map((file) => file.filePath).join(", ")}`,
     logType: "success",
-    logState: "Dosya İşlemi",
+    logState: "Dosya İşlemleri",
   });
   await log.save();
   return files;
@@ -99,7 +99,7 @@ export const getFileContent = async (filePath) => {
     const log = new Log({
       logContent: `Dosya başarıyla okundu: ${filePath}`,
       logType: "success",
-      logState: "Dosya İşlemi",
+      logState: "Dosya İşlemleri",
     });
     await log.save();
     console.log("Dosya başarıyla okundu:", data);
@@ -108,7 +108,7 @@ export const getFileContent = async (filePath) => {
     const log = new Log({
       logContent: "Dosya okunamadı.",
       logType: "error",
-      logState: "Dosya İşlemi",
+      logState: "Dosya İşlemleri",
     });
     await log.save();
     console.error("Error reading file:", error);
@@ -121,7 +121,7 @@ export const updateConvertStatus = async (fileId, status) => {
     const log = new Log({
       logContent: `Dönüşüm durumu güncellendi: ${fileId}, ${status}`,
       logType: "success",
-      logState: "Dosya İşlemi",
+      logState: "Dosya İşlemleri",
     })
     await log.save();
     await File.updateOne({ _id: fileId }, { isConverted: status });
@@ -130,7 +130,7 @@ export const updateConvertStatus = async (fileId, status) => {
     const log = new Log({
       logContent: "Dosya durumu güncellenemedi.",
       logType: "error",
-      logState: "Dosya İşlemi",
+      logState: "Dosya İşlemleri",
     });
     await log.save();
     console.error("Error updating file converting:", error);
@@ -144,14 +144,14 @@ export const updateFileStatus = async (fileId, status) => {
     const log = new Log({
       logContent: `Dosya durumu güncellendi: ${fileId}, ${status}`,
       logType: "success",
-      logState: "Dosya İşlemi",
+      logState: "Dosya İşlemleri",
     });
     await log.save();
   } catch (error) {
     const log = new Log({
       logContent: "Dosya durumu güncellenemedi.",
       logType: "error",
-      logState: "Dosya İşlemi",
+      logState: "Dosya İşlemleri",
     });
     await log.save();
     console.error("Error updating file status:", error);

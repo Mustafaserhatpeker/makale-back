@@ -22,7 +22,7 @@ export const registerUser = async (req, res) => {
       const log = new Log({
         logContent: "Kullanıcı eklenirken hata oluştu: Eksik parametre.",
         logType: "error",
-        logState: "Kullanıcı İşlemi",
+        logState: "Kullanıcı İşlemleri",
       });
       await log.save();
       return res.status(400).json({ error: "Eksik parametre." });
@@ -43,7 +43,7 @@ export const listUsers = async (req, res) => {
       const log = new Log({
         logContent: "Kullanıcı listesi boş.",
         logType: "info",
-        logState: "Kullanıcı İşlemi",
+        logState: "Kullanıcı İşlemleri",
       });
       await log.save();
       return res.status(404).json({ message: "Kullanıcı bulunamadı." });
@@ -60,7 +60,7 @@ export const addFileToUserController = async (req, res) => {
       const log = new Log({
         logContent: "Dosya eklenirken hata oluştu: Eksik parametre.",
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       return res.status(400).json({ error: "Eksik parametre." });

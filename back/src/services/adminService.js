@@ -30,7 +30,7 @@ export const addUser = async (name, email, role) => {
     const log = new Log({
       logContent: `Hakem Ekleme Başarısız, Hakem Zaten Bulunuyor: ${name}`,
       logType: "error",
-      logState: "Kullanıcı İşlemi",
+      logState: "Kullanıcı İşlemleri",
     });
     await log.save();
     throw new Error("Kullanıcı Zaten Bulunuyor.");
@@ -40,7 +40,7 @@ export const addUser = async (name, email, role) => {
   const log = new Log({
     logContent: `Yeni Hakem Eklendi: ${name}`,
     logType: "success",
-    logState: "Kullanıcı İşlemi",
+    logState: "Kullanıcı İşlemleri",
   });
   await log.save();
   await user.save();
@@ -53,7 +53,7 @@ export const getUsers = async () => {
     const log = new Log({
       logContent: "Kullanıcı listesi boş.",
       logType: "info",
-      logState: "Kullanıcı İşlemi",
+      logState: "Kullanıcı İşlemleri",
     });
     await log.save();
     throw new Error("Kullanıcı bulunamadı.");
@@ -61,7 +61,7 @@ export const getUsers = async () => {
   const log = new Log({
     logContent: `Kullanıcı Listesi: ${users.map((user) => user.name).join(", ")}`,
     logType: "success",
-    logState: "Kullanıcı İşlemi",
+    logState: "Kullanıcı İşlemleri",
   });
   await log.save();
   return users;
@@ -73,7 +73,7 @@ export const addFileToUser = async (userId, filePath) => {
     const log = new Log({
       logContent: `Dosya Ekleme Başarısız, Kullanıcı Bulunamadı: ${userId}`,
       logType: "error",
-      logState: "Kullanıcı İşlemi",
+      logState: "Kullanıcı İşlemleri",
     });
     await log.save();
     throw new Error("Kullanıcı bulunamadı.");
@@ -83,7 +83,7 @@ export const addFileToUser = async (userId, filePath) => {
   const log = new Log({
     logContent: `Yeni Dosya Eklendi: ${filePath} Kullanıcı: ${user.name}`,
     logType: "success",
-    logState: "Kullanıcı İşlemi",
+    logState: "Kullanıcı İşlemleri",
   });
   await log.save();
   await user.save();

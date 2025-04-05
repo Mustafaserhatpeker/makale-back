@@ -14,7 +14,7 @@ export const uploadFile = async (req, res) => {
       const log = new Log({
         logContent: "Dosya yüklenmedi.",
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       return res.status(400).json({ error: "Dosya yüklenmedi." });
@@ -26,7 +26,7 @@ export const uploadFile = async (req, res) => {
       const log = new Log({
         logContent: "Dosya yüklenirken hata oluştu: Eksik parametre.",
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       return res.status(400).json({ error: "Eksik parametre." });
@@ -50,7 +50,7 @@ export const getFile = async (req, res) => {
       const log = new Log({
         logContent: `Dosya bulunamadı: ${id}`,
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       return res.status(404).json({ error: "Dosya bulunamadı." });
@@ -151,7 +151,7 @@ export const getFileContentController = async (req, res) => {
       const log = new Log({
         logContent: "Dosya içeriği alınırken hata oluştu: Eksik parametre.",
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       return res.status(400).json({ error: "Eksik parametre." });
@@ -172,7 +172,7 @@ export const updateConvertStatusController = async (req, res) => {
       const log = new Log({
         logContent: `Dönüşüm durumu güncellenirken eksik parametre: ${fileId}, ${status}`,
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       return res.status(400).json({ error: "Eksik parametre." });
@@ -193,7 +193,7 @@ export const updateFileStatusController = async (req, res) => {
       const log = new Log({
         logContent: `Dosya durumu güncellenirken eksik parametre: ${fileId}, ${status}`,
         logType: "error",
-        logState: "Dosya İşlemi",
+        logState: "Dosya İşlemleri",
       });
       await log.save();
       return res.status(400).json({ error: "Eksik parametre." });
