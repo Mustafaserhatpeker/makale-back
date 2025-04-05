@@ -50,6 +50,23 @@ export const registerUser = async (req, res) => {
 export const listUsers = async (req, res) => {
   try {
     const users = await getUsers();
+    if (!users || users.length === 0) {
+      const log = new Log({
+        logContent: "Kullanıcı listesi boş.",
+        logType: "info",
+        logState: "Kullanıcı İşlemi",
+      });
+      await log.save();
+
+      return res.status(404).json({ message: "Kullanıcı bulunamadı." });
+    }
+
+    const log = new Log({
+      logContent: "Kullanıcı listesi başarıyla getirildi.",
+      logType: "success",
+      logState: "Kullanıcı İşlemi",
+    });
+    await log.save();
     res.json({ users });
   } catch (error) {
     const log = new Log({
