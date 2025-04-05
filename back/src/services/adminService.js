@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import Admin from "../models/Admin.js";
-
+import Log from "../models/Log.js";
 import User from "../models/User.js";
 
 export const adminLogin = async (username, password) => {
@@ -25,11 +25,22 @@ export const adminLogin = async (username, password) => {
 
 export const addUser = async (name, email, role) => {
   const existingUser = await User.findOne({ email });
+
   if (existingUser) {
+    const log = new Log({
+      logContent: `Hakem Ekleme Başarısız, Hakem Zaten Bulunuyor: ${name}`,
+      logType: "conflict",
+    });
+    await log.save();
     throw new Error("Kullanıcı Zaten Bulunuyor.");
   }
 
   const user = new User({ name, email, role });
+  const log = new Log({
+    logContent: `Yeni Hakem Eklendi: ${name}`,
+    logType: "info",
+  });
+  await log.save();
   await user.save();
   return user;
 };
@@ -42,9 +53,20 @@ export const getUsers = async () => {
 export const addFileToUser = async (userId, filePath) => {
   const user = await User.findById(userId);
   if (!user) {
+    const log = new Log({
+      logContent: `Dosya Ekleme Başarısız, Kullanıcı Bulunamadı: ${userId}`,
+      logType: "error",
+    });
+    await log.save();
     throw new Error("Kullanıcı bulunamadı.");
+
   }
   user.addedFiles.push(filePath);
+  const log = new Log({
+    logContent: `Yeni Dosya Eklendi: ${filePath} Kullanıcı: ${user.name}`,
+    logType: "info",
+  });
+  await log.save();
   await user.save();
   return user;
 };
