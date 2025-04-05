@@ -56,7 +56,7 @@ export const getFile = async (req, res) => {
         fileObject.statusText = "Dosya Hakem İncelemesinde.";
         break;
       case 3:
-        fileObject.statusText = "Hakem İncelemesi Bitti.";
+        fileObject.statusText = "Hakem İncelemesi Bitti. Onaylandı.";
         break;
       case 4:
         fileObject.statusText = "Dosya Hakem Tarafından Reddedildi. Revizyon İsteniyor.";
