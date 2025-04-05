@@ -23,13 +23,13 @@ export const adminLogin = async (username, password) => {
   return { admin, token };
 };
 
-export const addUser = async (name, email, password, role) => {
+export const addUser = async (name, email, role) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new Error("Kullanıcı Zaten Bulunuyor.");
   }
 
-  const user = new User({ name, email, password: password, role });
+  const user = new User({ name, email, role });
   await user.save();
   return user;
 };
