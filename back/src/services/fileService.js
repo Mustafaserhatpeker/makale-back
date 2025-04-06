@@ -136,6 +136,19 @@ export const updateConvertStatus = async (fileId, status) => {
 
 export const updateFileStatus = async (fileId, status) => {
   try {
+    const file = await File.findById(fileId);
+    if (!file) {
+      throw new Error("Dosya bulunamadı");
+    }
+    if (file.fileStatus === status) {
+      const log = new Log({
+        logContent: `Dosya zaten ${status} durumunda. Durum değişikliği yapılmadı: ${fileId}`,
+        logType: "info",
+        logState: "Dosya İşlemleri",
+      });
+      await log.save();
+      return;
+    }
     await File.updateOne({ _id: fileId }, { fileStatus: status });
     const log = new Log({
       logContent: `Dosya durumu güncellendi: ${fileId}, ${status}`,
@@ -154,3 +167,4 @@ export const updateFileStatus = async (fileId, status) => {
     throw new Error("Dosya durumu güncellenemedi.");
   }
 };
+
