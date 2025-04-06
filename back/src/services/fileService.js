@@ -2,6 +2,7 @@ import File from "../models/File.js";
 import mongoose from "mongoose";
 import fs from "fs/promises";
 import Log from "../models/Log.js";
+import path from "path";
 export const saveFile = async (filePath, uploadedBy) => {
   const file = new File({ filePath, uploadedBy });
   const log = new Log({
@@ -95,22 +96,10 @@ export const getFiles = async () => {
 
 export const getFileContent = async (filePath) => {
   try {
-    const data = await fs.readFile(filePath, "utf8");
-    const log = new Log({
-      logContent: `Dosya başarıyla okundu: ${filePath}`,
-      logType: "success",
-      logState: "Dosya İşlemleri",
-    });
-    await log.save();
-    console.log("Dosya başarıyla okundu:", data);
-    return data;
+    // Dosyayı binary formatında oku
+    const data = await fs.promises.readFile(filePath); // "utf8" kaldırıldı
+    return data; // Dosya binary olarak döndürülüyor
   } catch (error) {
-    const log = new Log({
-      logContent: "Dosya okunamadı.",
-      logType: "error",
-      logState: "Dosya İşlemleri",
-    });
-    await log.save();
     console.error("Error reading file:", error);
     throw new Error("Dosya okunamadı");
   }

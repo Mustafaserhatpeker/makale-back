@@ -8,6 +8,7 @@ import {
 } from "../services/fileService.js";
 import Log from "../models/Log.js";
 
+
 export const uploadFile = async (req, res) => {
   try {
     if (!req.file) {
@@ -175,23 +176,21 @@ export const getAllFiles = async (req, res) => {
   }
 };
 
+
 export const getFileContentController = async (req, res) => {
   try {
     const { filePath } = req.body;
     if (!filePath) {
-      const log = new Log({
-        logContent: "Dosya içeriği alınırken hata oluştu: Eksik parametre.",
-        logType: "error",
-        logState: "Dosya İşlemleri",
-      });
-      await log.save();
       return res.status(400).json({ error: "Eksik parametre." });
     }
 
+
     const content = await getFileContent(filePath);
+
+
+    res.setHeader("Content-Type", "application/pdf");
     res.send(content);
   } catch (error) {
-
     res.status(500).json({ error: error.message });
   }
 };
