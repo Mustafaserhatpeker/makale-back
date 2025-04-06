@@ -74,21 +74,37 @@ export const getFile = async (req, res) => {
         fileObject.statusText = "Dosya Editöre Gönderildi.";
         break;
       case 1:
-        fileObject.statusText = "Dosya Hakem Ataması Bekliyor.";
+        fileObject.statusText = "Dosya İşleme Alınmayı Bekliyor.";
         break;
       case 2:
-        fileObject.statusText = "Dosya Hakem İncelemesinde.";
+        fileObject.statusText = "Editör İşlemleri Tamamlandı. Hakem Ataması Bekleniyor.";
         break;
       case 3:
-        fileObject.statusText = "Hakem İncelemesi Bitti. Onaylandı.";
+        fileObject.statusText = "Dosya Editör Tarafından Reddedildi. Revizyon İsteniyor.";
         break;
       case 4:
-        fileObject.statusText = "Dosya Hakem Tarafından Reddedildi. Revizyon İsteniyor.";
+        fileObject.statusText = "Dosya Hakeme Atandı.";
+        break;
+      case 5:
+        fileObject.statusText = "Dosya Hakem İncelemesi Bekliyor.";
+        break;
+      case 6:
+        fileObject.statusText = "Dosya Hakem İncelemesinde.";
+        break;
+      case 7:
+        fileObject.statusText = "Hakem İncelemesi Sona Erdi. Hakem Sonucu Bekleniyor.";
+        break;
+      case 8:
+        fileObject.statusText = "Dosya Reddedildi.";
+        break;
+      case 9:
+        fileObject.statusText = "Dosya Onaylandı.";
         break;
       default:
         fileObject.statusText = "Bilinmeyen bir hata oluştu.";
         break;
     }
+
 
     res.json({ file: fileObject });
   } catch (error) {
@@ -118,16 +134,31 @@ export const getAllFiles = async (req, res) => {
           fileObject.statusText = "Dosya Editöre Gönderildi.";
           break;
         case 1:
-          fileObject.statusText = "Dosya Hakem Ataması Bekliyor.";
+          fileObject.statusText = "Dosya İşleme Alınmayı Bekliyor.";
           break;
         case 2:
-          fileObject.statusText = "Dosya Hakem İncelemesinde.";
+          fileObject.statusText = "Editör İşlemleri Tamamlandı. Hakem Ataması Bekleniyor.";
           break;
         case 3:
-          fileObject.statusText = "Hakem İncelemesi Bitti.";
+          fileObject.statusText = "Dosya Editör Tarafından Reddedildi. Revizyon İsteniyor.";
           break;
         case 4:
-          fileObject.statusText = "Dosya Hakem Tarafından Reddedildi. Revizyon İsteniyor.";
+          fileObject.statusText = "Dosya Hakeme Atandı.";
+          break;
+        case 5:
+          fileObject.statusText = "Dosya Hakem İncelemesi Bekliyor.";
+          break;
+        case 6:
+          fileObject.statusText = "Dosya Hakem İncelemesinde.";
+          break;
+        case 7:
+          fileObject.statusText = "Hakem İncelemesi Sona Erdi. Hakem Sonucu Bekleniyor.";
+          break;
+        case 8:
+          fileObject.statusText = "Dosya Reddedildi.";
+          break;
+        case 9:
+          fileObject.statusText = "Dosya Onaylandı.";
           break;
         default:
           fileObject.statusText = "Bilinmeyen bir hata oluştu.";
