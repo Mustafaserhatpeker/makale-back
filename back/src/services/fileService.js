@@ -96,11 +96,18 @@ export const getFiles = async () => {
 
 export const getFileContent = async (filePath) => {
   try {
-    // Dosyayı binary formatında oku
-    const data = await fs.promises.readFile(filePath); // "utf8" kaldırıldı
-    return data; // Dosya binary olarak döndürülüyor
+
+    try {
+      await fs.access(filePath);
+    } catch (error) {
+      throw new Error('Dosya mevcut değil');
+    }
+
+
+    const data = await fs.readFile(filePath);
+    return data;
   } catch (error) {
-    console.error("Error reading file:", error);
+    console.error("Dosya okunamadı:", error);
     throw new Error("Dosya okunamadı");
   }
 };

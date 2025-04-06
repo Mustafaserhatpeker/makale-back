@@ -7,8 +7,8 @@ import {
   updateFileStatus,
 } from "../services/fileService.js";
 import Log from "../models/Log.js";
-
-
+import path from "path";
+import fs from 'fs/promises';
 export const uploadFile = async (req, res) => {
   try {
     if (!req.file) {
@@ -185,7 +185,10 @@ export const getFileContentController = async (req, res) => {
     }
 
 
-    const content = await getFileContent(filePath);
+    const fullFilePath = path.resolve(filePath);
+
+
+    const content = await getFileContent(fullFilePath);
 
 
     res.setHeader("Content-Type", "application/pdf");
