@@ -85,7 +85,7 @@ export const getFiles = async () => {
     await log.save();
   }
   const log = new Log({
-    logContent: `Dosya Listesi: ${files.map((file) => file.filePath).join(", ")}`,
+    logContent: `Dosya Listesi: ${files.length} adet dosya bulundu.`,
     logType: "success",
     logState: "Dosya İşlemleri",
   });
