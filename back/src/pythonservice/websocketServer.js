@@ -3,14 +3,14 @@ import mongoose from "mongoose";
 import { spawn } from "child_process";
 import File from "../models/File.js";
 
-// Bağlı olan tüm istemcileri saklamak için bir dizi
+
 const clients = new Set();
 
 const wss = new WebSocketServer({ port: 5002 });
 
 wss.on("connection", (ws) => {
   console.log("Yeni bir istemci bağlandı.");
-  clients.add(ws); // İstemciyi sakla
+  clients.add(ws);
 
   ws.on("message", async (message) => {
     try {
@@ -38,7 +38,7 @@ wss.on("connection", (ws) => {
       ws.send(
         JSON.stringify({
           status: "processing",
-          message: "İşlem başlatılıyor...",
+          message: "Süreç devam ediyor...",
         })
       );
 
