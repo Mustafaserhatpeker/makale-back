@@ -2,7 +2,7 @@ import WebSocket, { WebSocketServer } from "ws";
 import mongoose from "mongoose";
 import { spawn } from "child_process";
 import File from "../models/File.js";
-
+import { updateFileStatus } from "../services/fileService.js";
 
 const clients = new Set();
 
@@ -73,6 +73,13 @@ wss.on("connection", (ws) => {
             exitCode: code,
           })
         );
+        updateFileStatus(userFile._id, 2)
+          .then(() => {
+            console.log("Dosya durumu güncellendi.");
+          })
+          .catch((error) => {
+            console.error("Dosya durumu güncellenirken hata:", error);
+          });
       });
     } catch (error) {
       console.error("Geçersiz mesaj formatı:", error);
