@@ -30,6 +30,15 @@ wss.on("connection", (ws) => {
         );
         return;
       }
+      if (userFile.fileStatus != 1) {
+        ws.send(
+          JSON.stringify({
+            status: "error",
+            message: "Dosya durumu uygun değil.",
+          })
+        );
+        return;
+      }
 
       const filePath = userFile.filePath;
       const pythonScriptPath =
@@ -73,6 +82,7 @@ wss.on("connection", (ws) => {
             exitCode: code,
           })
         );
+
         updateFileStatus(userFile._id, 2)
           .then(() => {
             console.log("Dosya durumu güncellendi.");
@@ -80,6 +90,7 @@ wss.on("connection", (ws) => {
           .catch((error) => {
             console.error("Dosya durumu güncellenirken hata:", error);
           });
+
       });
     } catch (error) {
       console.error("Geçersiz mesaj formatı:", error);
