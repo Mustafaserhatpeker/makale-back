@@ -1,0 +1,24 @@
+!d@t3B1nD2024
+
+X ADRESİ YAZACAK PROFİLDE,+
+Hizmet profili Takvim işlemleri içerisinde yer alacak, +
+Kayıtlı hizmetlerde hizmetin adı gösterilecek açıklama yerine.+
+Kara listede gerçek kişinin adı ve kişinin telefon numarası olacak.+
+Bekleyen randevular sayfasının üstü bekleyen istekler olacak.+
+Hizmet açıklaması ve randevu notuna maksimum karakter sınırı getirilecek.(500 karakter).+
+Durumun yanına bir adet yön tuşu gelecek ve randevunun status bilgisine göre bekleyen>onaylanan>reddedilen şeklinde sıralayacak ve default olarak da bu gelecek.
+Bekleyen isteklerde bulunan tablo default ta en erken tarihli randevu en başta gösterilecek şekilde düzenlenecek. Kullanıcı farklı orderlar ile bu sıralamayı o an için değiştirebilir(örneğin durum order bilgisi).+
+Kullanıcının profil fotoğrafını alırken uygun formatta kesme ve büyütme işlemleri yapmasına izin vereceğiz.+
+
+
+Datebind in sistemsel bildirimler ve randevu slot bildirimleri bildirim kısmında yer alacak.
+Bildirim tipi, başlığı, açıklaması ve tarihi yer alacak bildirimler kısmında. Bildirimin okundu okunmadı bilgisi de yer alacak sidebarda.
+Bir plan pasife alınırken 3 seçenek sunulacak:
+1. Seçenek:
+Kullanıcı bütün randevularını iptal eder ve plan pasife alınır(instant deploy)
+2.Seçenek:
+Kullanıcı planı pasife alırken slot aralığının uygun olduğu başka bir plana aktarma yaparak planı pasife alabilir ve aktif edeceği ikinci plan devreye girer(several deploy).
+3.Seçenek:
+Kullanıcı planı pasife alırken aktif olan planın bitiş tarihinden sonra planı pasife alır ve isterse yeni bir planı o tarihte aktif edilecek şekilde ayarlayabilir. Bir sonraki aktif edilecek planın tarihi aktif olanın bitiş tarihinden sonra olması gerekiyor.
+Pasif takvim silinirken kullanıcıya uyarı göstereceğiz.
+Şifremi unuttum eklenecek.

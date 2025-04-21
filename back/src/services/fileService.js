@@ -18,6 +18,8 @@ export const saveFile = async (filePath, uploadedBy) => {
 export const getFileById = async (id, uploadedBy) => {
   try {
     id = id.trim();
+    console.log("id", id);
+    console.log("uploadedBy dolu mu", uploadedBy);
     if (!mongoose.Types.ObjectId.isValid(id)) {
       const log = new Log({
         logContent: "Geçersiz ObjectId.",
@@ -29,7 +31,7 @@ export const getFileById = async (id, uploadedBy) => {
       return null;
     }
 
-    console.log("id", id);
+   
     const file = await File.findById(id);
 
     if (!file) {
@@ -42,8 +44,7 @@ export const getFileById = async (id, uploadedBy) => {
       await log.save();
       return null;
     }
-    console.log("file", file);
-    console.log("file.uploadedBy", file.uploadedBy);
+   
 
     if (file.uploadedBy !== uploadedBy) {
       console.log("Dosya sahibi ile eşleşmiyor.");
